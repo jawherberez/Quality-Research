@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+<<<<<<< Updated upstream
 import { cookies } from "next/headers";
 import { ObjectId } from "mongodb";
 import { getDb } from "@/lib/mongodb";
@@ -77,5 +78,46 @@ export async function POST(req: Request) {
       { ok: false, message: "Erreur lors de la modification" },
       { status: 500 }
     );
+=======
+import clientPromise from "@/lib/mongodb";
+import bcrypt from "bcryptjs";
+import { cookies } from "next/headers";
+
+export async function POST(request: Request) {
+  try {
+    const { oldPassword, newPassword } = await request.json();
+    
+    const cookieStore = await cookies();
+    const email = cookieStore.get("user-email")?.value;
+
+    if (!email) {
+      return NextResponse.json({ ok: false, error: "Session expirée" }, { status: 401 });
+    }
+
+    const client = await clientPromise;
+    const db = client.db("qualityandresearch");
+    const user = await db.collection("users").findOne({ email });
+
+    if (!user) {
+      return NextResponse.json({ ok: false, error: "Utilisateur non trouvé" }, { status: 404 });
+    }
+
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+
+    if (!isMatch) {
+      return NextResponse.json({ ok: false, error: "Ancien mot de passe incorrect" }, { status: 400 });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    await db.collection("users").updateOne(
+      { email },
+      { $set: { password: hashedNewPassword, updatedAt: new Date() } }
+    );
+
+    return NextResponse.json({ ok: true, message: "Mot de passe modifié !" });
+  } catch (error) {
+    return NextResponse.json({ ok: false, error: "Erreur serveur" }, { status: 500 });
+>>>>>>> Stashed changes
   }
 }

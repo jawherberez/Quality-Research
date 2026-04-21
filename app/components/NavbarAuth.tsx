@@ -2,9 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+<<<<<<< Updated upstream
 import { useRouter, usePathname } from "next/navigation";
 
 // Mise à jour du type pour inclure la photo de profil
+=======
+import { useRouter, usePathname } from "next/navigation"; // Correction : Import manquant
+
+// Correction : Définition du type User indispensable pour TypeScript
+>>>>>>> Stashed changes
 type User = {
   _id: string;
   fullName: string;
@@ -32,7 +38,6 @@ export default function NavbarAuth() {
         });
 
         const data = await res.json();
-
         if (res.ok) setUser(data.user);
         else setUser(null);
       } catch {
@@ -41,21 +46,15 @@ export default function NavbarAuth() {
         setLoading(false);
       }
     };
-
     fetchMe();
   }, [pathname]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        menuRef.current &&
-        event.target instanceof Node &&
-        !menuRef.current.contains(event.target)
-      ) {
+      if (menuRef.current && event.target instanceof Node && !menuRef.current.contains(event.target)) {
         setOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -66,9 +65,7 @@ export default function NavbarAuth() {
         method: "POST",
         credentials: "include",
       });
-
       if (!res.ok) return;
-
       setUser(null);
       setOpen(false);
       router.replace("/");
@@ -87,7 +84,11 @@ export default function NavbarAuth() {
           onClick={() => setOpen((prev) => !prev)}
           className="flex items-center gap-3 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-800 shadow-sm transition hover:border-[#15803d] hover:shadow-md"
         >
+<<<<<<< Updated upstream
           {/* AVATAR AVEC PHOTO DE PROFIL */}
+=======
+          {/* AFFICHAGE DE LA PHOTO OU DE L'INITIALE */}
+>>>>>>> Stashed changes
           <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-gray-100 bg-[#15803d]">
             {user.profileImage ? (
               <img 
@@ -106,6 +107,7 @@ export default function NavbarAuth() {
             {user.fullName}
           </span>
 
+<<<<<<< Updated upstream
           <svg
             className={`h-4 w-4 text-gray-400 transition-transform ${open ? "rotate-180" : ""}`}
             viewBox="0 0 20 20"
@@ -116,14 +118,24 @@ export default function NavbarAuth() {
               d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.51a.75.75 0 01-1.08 0l-4.25-4.51a.75.75 0 01.02-1.06z"
               clipRule="evenodd"
             />
+=======
+          <svg className={`h-4 w-4 text-gray-400 transition-transform ${open ? "rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.51a.75.75 0 01-1.08 0l-4.25-4.51a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+>>>>>>> Stashed changes
           </svg>
         </button>
 
         {open && (
+<<<<<<< Updated upstream
           <div className="absolute right-0 z-[9999] mt-3 w-64 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl animate-in fade-in zoom-in-95 duration-200">
             {/* ENTÊTE DU MENU AVEC PHOTO */}
             <div className="flex items-center gap-3 border-b border-gray-100 px-4 py-4 bg-gray-50/50">
               <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border border-gray-200 bg-white">
+=======
+          <div className="absolute right-0 z-[9999] mt-3 w-64 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl">
+            <div className="flex items-center gap-3 border-b border-gray-100 px-4 py-4 bg-gray-50/50">
+              <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border border-gray-200">
+>>>>>>> Stashed changes
                 {user.profileImage ? (
                   <img src={user.profileImage} alt="" className="h-full w-full object-cover" />
                 ) : (
@@ -139,6 +151,7 @@ export default function NavbarAuth() {
             </div>
 
             <div className="p-2 space-y-1">
+<<<<<<< Updated upstream
               <Link
                 href="/profile"
                 onClick={() => setOpen(false)}
@@ -172,6 +185,18 @@ export default function NavbarAuth() {
                 <svg className="w-5 h-5 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
+=======
+              <Link href="/profile" onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-gray-700 hover:bg-green-50 hover:text-[#15803d]">
+                Mon Profil
+              </Link>
+              {user.role === "admin" && (
+                <Link href="/admin" onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-gray-700 hover:bg-green-50 hover:text-[#15803d]">
+                  Admin
+                </Link>
+              )}
+              <div className="my-1 border-t border-gray-100"></div>
+              <button onClick={handleLogout} className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-bold text-red-600 hover:bg-red-50">
+>>>>>>> Stashed changes
                 Déconnexion
               </button>
             </div>
@@ -183,10 +208,17 @@ export default function NavbarAuth() {
 
   return (
     <div className="flex items-center gap-3 shrink-0">
+<<<<<<< Updated upstream
       <Link href="/login" className="btn btn-outline px-6 py-2.5 text-sm font-bold border-gray-200 hover:border-[#15803d] hover:text-[#15803d]">
         Connexion
       </Link>
       <Link href="/register" className="bg-[#15803d] text-white px-6 py-2.5 text-sm font-black rounded-full hover:bg-black transition-all shadow-lg shadow-green-100">
+=======
+      <Link href="/login" className="btn btn-outline px-6 py-2.5 text-sm font-bold">
+        Connexion
+      </Link>
+      <Link href="/register" className="bg-[#15803d] text-white px-6 py-2.5 text-sm font-black rounded-full hover:bg-black transition-all">
+>>>>>>> Stashed changes
         Inscription
       </Link>
     </div>
