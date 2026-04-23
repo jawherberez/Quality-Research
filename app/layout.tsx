@@ -15,8 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr">
-      <body className="flex min-h-screen flex-col">
+    <html lang="fr" suppressHydrationWarning>
+      <body className="flex min-h-screen flex-col" suppressHydrationWarning>
         {/* HEADER */}
         <header className="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-gray-100 animate-slide-down">
           <div className="mx-auto max-w-7xl px-6 py-4">
@@ -81,7 +81,6 @@ export default function RootLayout({
                 </NavDropdown>
 
                 <NavLink href="/projects">Projets et collaboration</NavLink>
-                <NavLink href="/reports">Evénements</NavLink>
                 <NavLink href="/school">Ressources</NavLink>
 
                 <NavDropdown label="Juridique">
